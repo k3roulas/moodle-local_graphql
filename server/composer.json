@@ -1,0 +1,10 @@
+{
+    "autoload-dev": {
+        "psr-4": {
+            "MoodleGQL\\": "MoodleGQL"
+        }
+    },
+    "require": {
+        "webonyx/graphql-php": "^14.11"
+    }
+}

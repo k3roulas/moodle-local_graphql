@@ -1,1 +1,0 @@
-# moodle-local_graphql 
