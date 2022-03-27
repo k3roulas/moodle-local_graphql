@@ -135,22 +135,29 @@ class TypeTransformer
                     return $objectType;
                     break;
                 case 'external_value':
-                    return [
-                        'type' => Type::string()
-                    ];
-
+                    $type = [];
                     /** @var external_value $external_value */
                     $external_value = $input;
                     switch ($external_value->type) {
-                        // TODO alpha and raw
                         case 'alpha':
                         case 'raw':
-                            // TODO allownull, desc, required, default
-                            return [
-                                'type' => Type::string()
-                            ];
+                            $type['type'] = Type::string();
                             break;
                     }
+                    $allowNull = $external_value->allownull ?? false;
+                    $desc = $external_value->desc ?? false;
+                    $required = $external_value->required ?? false;
+                    $default =  $external_value->required ?? false;
+                    if ($required && !$allowNull) {
+                        $type['type'] = Type::nonNull($type['type']);
+                    }
+                    if ($desc) {
+                        $type['description'] = $desc;
+                    }
+                    if ($default) {
+                        // TODO add a comment in the description
+                    }
+                    return $type;
                     break;
             }
         }
